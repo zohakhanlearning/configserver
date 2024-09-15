@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-    matrix:
-    java-version: [ '17' ]  # Specify the Java version
+     matrix:
+      java-version: [ '17', '11' ]  # Specify the Java version
 
     steps:
       - name: Checkout code
