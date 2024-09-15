@@ -11,15 +11,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Request `.tfstate` file upload
-        run: echo "Please upload the .tfstate file."
-
       - name: Upload .tfstate file
         id: upload_tfstate
         uses: actions/upload-artifact@v3
         with:
           name: terraform-state
-          path: path/to/terraform.tfstate  # Replace with actual path
+          path: ./terraform.tfstate  # Replace with actual path
 
       - name: Download uploaded .tfstate file
         uses: actions/download-artifact@v3
