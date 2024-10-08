@@ -42,7 +42,7 @@ jobs:
       - name: Archive the artifact
         uses: actions/upload-artifact@v3
         with:
-          name: springboot-app
+          name: configserver
           path: target/*.jar
   Containerize:
     name: Build Docker Image
@@ -70,7 +70,7 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ secrets.DOCKER_REGISTRY }}/springboot-app:latest
+          tags: ${{ secrets.DOCKER_REGISTRY }}/configserver:latest
 
 
 
