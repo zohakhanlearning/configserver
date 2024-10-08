@@ -8,7 +8,8 @@ LABEL "org.opencontainers.image.authors"="zoha.com"
 WORKDIR /app
 
 # Add the application's jar to the image
-COPY target/configserver.jar ./configserver.jar
+COPY target/configserver-0.0.1-SNAPSHOT.jar ./configserver-0.0.1-SNAPSHOT.jar
+
 
 # execute the application
 ENTRYPOINT ["java", "-jar", "configserver-0.0.1-SNAPSHOT.jar"]
