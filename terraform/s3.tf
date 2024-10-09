@@ -1,4 +1,4 @@
-# Declare the S3 bucket for storing Terraform state
+# Declare the S3 bucket
 resource "aws_s3_bucket" "S3-bucket" {
   bucket = "zoha-bucket-dev"
 
@@ -18,7 +18,7 @@ resource "aws_s3_bucket_versioning" "S3-bucket" {
 }
 
 # Enable server-side encryption (SSE) for the S3 bucket
-resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" {
+resource "aws_s3_bucket_server_side_encryption_configuration" "S3-bucket" {
   bucket = aws_s3_bucket.S3-bucket.id
 
   rule {
@@ -31,7 +31,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" 
 
 
 # Block public access to the S3 bucket
-resource "aws_s3_bucket_public_access_block" "terraform_state" {
+resource "aws_s3_bucket_public_access_block" "S3-bucket" {
   bucket = aws_s3_bucket.S3-bucket.id
 
   block_public_acls       = true
@@ -40,8 +40,10 @@ resource "aws_s3_bucket_public_access_block" "terraform_state" {
   restrict_public_buckets = true
 }
 
+
+
 # S3 bucket policy to restrict access to specific IAM roles
-resource "aws_s3_bucket_policy" "terraform_state" {
+resource "aws_s3_bucket_policy" "S3-bucket" {
   bucket = aws_s3_bucket.S3-bucket.id
 
   policy = jsonencode({
