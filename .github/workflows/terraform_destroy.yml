@@ -11,18 +11,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Upload .tfstate file
-        id: upload_tfstate
-        uses: actions/upload-artifact@v3
-        with:
-          name: terraform-state
-          path: ./terraform.tfstate  # Replace with actual path
-
       - name: Download uploaded .tfstate file
         uses: actions/download-artifact@v3
         with:
-          name: terraform-state
-          path: ./  # Download it to the root directory
+          name: terraform-tfstate
+          path: ./terraform  # Download it to the root directory
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
