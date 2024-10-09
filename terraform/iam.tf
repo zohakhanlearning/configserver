@@ -8,11 +8,13 @@ resource "aws_iam_policy" "s3_policy_permissions" {
       {
         Effect = "Allow"
         Action = [
+          "s3:CreateBucket",
+          "s3:ListBucket",
           "s3:PutBucketPolicy",
           "s3:GetBucketPolicy",
           "s3:DeleteBucketPolicy"
-        ]
-        Resource = "arn:aws:s3:::zoha-terraform-state-update"
+        ],
+        "Resource" = "*"
       }
     ]
   })

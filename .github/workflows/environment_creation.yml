@@ -22,6 +22,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -39,6 +40,12 @@ jobs:
           fi
         working-directory: ./terraform
 
+      - name: Create S3 Bucket
+        run: |
+          aws s3api create-bucket --bucket "zoha-terraform-state-bucket-${{ github.event.inputs.environment }}" --region ${{ secrets.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ secrets.AWS_REGION }}
+
+      - name: Wait for S3 Bucket to Propagate
+        run: sleep 60  # Wait for 60 seconds
 
       - name: Terraform Init
         run: terraform init
