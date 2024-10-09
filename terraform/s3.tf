@@ -1,30 +1,15 @@
-resource "aws_s3_bucket" "terraform_state_bucket" {
-  bucket = "zoha-terraform-state-bucket-${var.environment}"
+# Declare the S3 bucket for storing Terraform state
+resource "aws_s3_bucket" "terraform_state" {
+  bucket = "zoha-terraform-state-bucket-dev"
+  acl    = "private"
 
   tags = {
-    Name = "Terraform State Bucket"
+    Name = "Terraform state bucket"
     Environment = var.environment
   }
 }
 
-resource "aws_dynamodb_table" "terraform_lock_table" {
-  name         = "terraform-lock-table"
-  billing_mode = "PAY_PER_REQUEST"  # Auto scales the read/write throughput
-
-  hash_key = "LockID"
-
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
-
-  tags = {
-    Name        = "Terraform Lock Table"
-    Environment = "dev"
-  }
-}
-
-# Enable versioning on the S3 bucket
+# Enable versioning for the S3 bucket
 resource "aws_s3_bucket_versioning" "terraform_state" {
   bucket = aws_s3_bucket.terraform_state.id
 
@@ -33,7 +18,7 @@ resource "aws_s3_bucket_versioning" "terraform_state" {
   }
 }
 
-# Enable server-side encryption on the S3 bucket
+# Enable server-side encryption (SSE) for the S3 bucket
 resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" {
   bucket = aws_s3_bucket.terraform_state.id
 
@@ -44,26 +29,17 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" 
   }
 }
 
-# Outputs for S3 bucket and DynamoDB table (optional)
-output "state_bucket_name" {
-  value = aws_s3_bucket.terraform_state_bucket.bucket
-}
-
-output "lock_table_name" {
-  value = aws_dynamodb_table.terraform_lock_table.name
-}
-
-# Allow public access by disabling the block public policy setting
+# Block public access to the S3 bucket
 resource "aws_s3_bucket_public_access_block" "terraform_state" {
   bucket = aws_s3_bucket.terraform_state.id
 
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
-# Define a public-read policy
+# S3 bucket policy to restrict access to specific IAM roles
 resource "aws_s3_bucket_policy" "terraform_state" {
   bucket = aws_s3_bucket.terraform_state.id
 
@@ -71,12 +47,11 @@ resource "aws_s3_bucket_policy" "terraform_state" {
     Version = "2012-10-17"
     Statement = [
       {
-        Action    = "s3:GetObject"
-        Effect    = "Allow"
-        Resource  = "${aws_s3_bucket.terraform_state.arn}/*"
+        Action = "s3:*"
+        Effect = "Allow"
+        Resource = "${aws_s3_bucket.terraform_state.arn}/*"
         Principal = "*"
       }
     ]
   })
 }
-
