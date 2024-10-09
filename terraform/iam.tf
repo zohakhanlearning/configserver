@@ -12,7 +12,7 @@ resource "aws_iam_policy" "s3_policy_permissions" {
           "s3:GetBucketPolicy",
           "s3:DeleteBucketPolicy"
         ]
-        Resource = "arn:aws:s3:::my-terraform-state-bucket-update"
+        Resource = "arn:aws:s3:::zoha-terraform-state-update"
       }
     ]
   })
