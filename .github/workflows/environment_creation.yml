@@ -55,6 +55,11 @@ jobs:
         with:
           name: terraform-tfstate
           path: ./terraform/terraform.tfstate
+      - name: Download uploaded .tfstate file
+        uses: actions/download-artifact@v3
+        with:
+          name: terraform-tfstate
+          path: ./terraform  # Download it to the root directory
 
       - name: Terraform Destroy on Failure
         if: failure()
