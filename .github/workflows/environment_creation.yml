@@ -43,9 +43,9 @@ jobs:
       - name: Create S3 Bucket
         run: |
           if [ "${{ github.event.inputs.environment }}" == "dev" ]; then
-            aws s3api create-bucket --bucket "zoha-terraform-state-bucket-dev" --region ${{ secrets.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ secrets.AWS_REGION }}
+            aws s3api create-bucket --bucket "zoha-terraform-state-bucket-dev" --region ${{ secrets.AWS_REGION }} --create-bucket-configuration
           else
-            aws s3api create-bucket --bucket "zoha-terraform-state-bucket-prod" --region ${{ secrets.AWS_REGION }} --create-bucket-configuration LocationConstraint=${{ secrets.AWS_REGION }}
+            aws s3api create-bucket --bucket "zoha-terraform-state-bucket-prod" --region ${{ secrets.AWS_REGION }} --create-bucket-configuration 
           fi  
 
       - name: Wait for S3 Bucket to Propagate
