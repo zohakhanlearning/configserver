@@ -4,7 +4,7 @@ output "eks_cluster_name" {
 }
 
 output "ecr_repository_url" {
-  value = aws_ecr_repository.my_app.repository_url
+  value = aws_ecr_repository.configserver.repository_url
 }
 
 output "ec2_instance_id" {

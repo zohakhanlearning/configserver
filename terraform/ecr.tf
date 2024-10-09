@@ -1,8 +1,8 @@
 # ecr.tf
-resource "aws_ecr_repository" "my_app" {
-  name = "my-app"
+resource "aws_ecr_repository" "configserver" {
+  name = "configserver"
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }

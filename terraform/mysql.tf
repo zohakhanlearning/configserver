@@ -5,7 +5,7 @@ resource "aws_db_instance" "my_mysql" {
   instance_class    = "db.t3.micro"
   db_name           = "mydatabase"  # Use db_name instead of name
   username          = "admin"
-  password          = "yourpassword"
+  password          = "admin123"
   allocated_storage = 20
 
   db_subnet_group_name = aws_db_subnet_group.default.name
@@ -13,7 +13,7 @@ resource "aws_db_instance" "my_mysql" {
   backup_retention_period = 7
   multi_az = false
   storage_type = "gp2"
-
+  skip_final_snapshot = true
   tags = {
     Name = "my-mysql-db"
   }
