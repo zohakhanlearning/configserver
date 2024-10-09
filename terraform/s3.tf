@@ -33,11 +33,3 @@ resource "aws_s3_bucket_policy" "terraform_state" {
   })
 }
 
-terraform {
-  backend "s3" {
-    bucket         = "zoha-terraform-state-bucket-${var.environment}"
-    key            = "terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "terraform-lock-table"  # Optional, for state locking
-  }
-}
