@@ -26,6 +26,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Remove all backend files (prevent duplicate backend config)
+        run: rm -f ./terraform/backend*.tf ./terraform/backend.tf
+        working-directory: ./terraform
+
+      - name: Select backend file
+        run: |
+          if [ "${{ github.event.inputs.environment }}" == "dev" ]; then
+            cp backend-dev.tf backend.tf
+          else
+            cp backend-prod.tf backend.tf
+          fi
+        working-directory: ./terraform
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v2
         with:
