@@ -1,7 +1,6 @@
 # Declare the S3 bucket for storing Terraform state
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "zoha-terraform-state-bucket-dev"
-  acl    = "private"
+  bucket = "zoha-bucket-dev"
 
   tags = {
     Name = "Terraform state bucket"
