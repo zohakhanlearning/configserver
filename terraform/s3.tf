@@ -2,7 +2,7 @@ resource "aws_s3_bucket" "terraform_state" {
   bucket = "zoha-bucket-${var.environment}"
 
   tags = {
-    Name = "zoha-terraform-state-bucket"
+    Name = "zoha-bucket"
   }
 }
 
