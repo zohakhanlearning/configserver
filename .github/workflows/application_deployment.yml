@@ -1,12 +1,7 @@
 name: Deploy Application Deployment
 on:
   push:
-    branches:
-      - dev
-      - main
-      - feature/*
-      - hotfix/*
-      - release/*
+  workflow_dispatch:
 jobs:
   build:
     name: Build Docker Image
