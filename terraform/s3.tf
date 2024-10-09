@@ -1,16 +1,16 @@
 # Declare the S3 bucket for storing Terraform state
-resource "aws_s3_bucket" "terraform_state" {
+resource "aws_s3_bucket" "S3-bucket" {
   bucket = "zoha-bucket-dev"
 
   tags = {
-    Name = "Terraform state bucket"
+    Name = "S3 bucket"
     Environment = var.environment
   }
 }
 
 # Enable versioning for the S3 bucket
-resource "aws_s3_bucket_versioning" "terraform_state" {
-  bucket = aws_s3_bucket.terraform_state.id
+resource "aws_s3_bucket_versioning" "S3-bucket" {
+  bucket = aws_s3_bucket.S3-bucket.id
 
   versioning_configuration {
     status = "Enabled"
@@ -19,7 +19,7 @@ resource "aws_s3_bucket_versioning" "terraform_state" {
 
 # Enable server-side encryption (SSE) for the S3 bucket
 resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" {
-  bucket = aws_s3_bucket.terraform_state.id
+  bucket = aws_s3_bucket.S3-bucket.id
 
   rule {
     apply_server_side_encryption_by_default {
@@ -30,7 +30,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state" 
 
 # Block public access to the S3 bucket
 resource "aws_s3_bucket_public_access_block" "terraform_state" {
-  bucket = aws_s3_bucket.terraform_state.id
+  bucket = aws_s3_bucket.S3-bucket.id
 
   block_public_acls       = true
   block_public_policy     = true
@@ -40,7 +40,7 @@ resource "aws_s3_bucket_public_access_block" "terraform_state" {
 
 # S3 bucket policy to restrict access to specific IAM roles
 resource "aws_s3_bucket_policy" "terraform_state" {
-  bucket = aws_s3_bucket.terraform_state.id
+  bucket = aws_s3_bucket.S3-bucket.id
 
   policy = jsonencode({
     Version = "2012-10-17"
@@ -48,7 +48,7 @@ resource "aws_s3_bucket_policy" "terraform_state" {
       {
         Action = "s3:*"
         Effect = "Allow"
-        Resource = "${aws_s3_bucket.terraform_state.arn}/*"
+        Resource = "${aws_s3_bucket.S3-bucket.arn}/*"
         Principal = "*"
       }
     ]
