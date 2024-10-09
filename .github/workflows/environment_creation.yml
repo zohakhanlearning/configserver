@@ -24,6 +24,16 @@ jobs:
         with:
           terraform_version: 1.4.0
 
+      - name: Select backend file
+        run: |
+          if [ "${{ github.event.inputs.environment }}" == "dev" ]; then
+            cp backend-dev.tf backend.tf
+          else
+            cp backend-prod.tf backend.tf
+          fi
+        working-directory: ./terraform
+
+
       - name: Terraform Init
         run: terraform init
         working-directory: ./terraform
