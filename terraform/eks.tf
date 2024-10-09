@@ -1,6 +1,6 @@
 # eks.tf
-resource "aws_eks_cluster" "my_cluster" {
-  name     = "my-cluster"
+resource "aws_eks_cluster" "zoha_cluster" {
+  name     = "zoha-cluster"
   role_arn  = aws_iam_role.eks_cluster.arn
 
   vpc_config {
@@ -11,7 +11,7 @@ resource "aws_eks_cluster" "my_cluster" {
   }
 
   tags = {
-    Name = "my-cluster"
+    Name = "zoha-cluster"
   }
 }
 

@@ -1,9 +1,9 @@
-resource "aws_db_instance" "my_mysql" {
-  identifier        = "my-mysql-db"
+resource "aws_db_instance" "zoha_mysql" {
+  identifier        = "zoha-mysql-db"
   engine            = "mysql"
   engine_version    = "8.0"
   instance_class    = "db.t3.micro"
-  db_name           = "mydatabase"  # Use db_name instead of name
+  db_name           = "zohadatabase"  # Use db_name instead of name
   username          = "admin"
   password          = "admin123"
   allocated_storage = 20
@@ -15,23 +15,23 @@ resource "aws_db_instance" "my_mysql" {
   storage_type = "gp2"
   skip_final_snapshot = true
   tags = {
-    Name = "my-mysql-db"
+    Name = "zoha-mysql-db"
   }
 }
 
 # Subnet Group for the RDS instance
 resource "aws_db_subnet_group" "default" {
-  name       = "my-db-subnet-group"
+  name       = "zoha-db-subnet-group"
   subnet_ids = [aws_subnet.public[0].id, aws_subnet.public[1].id]
 
   tags = {
-    Name = "my-db-subnet-group"
+    Name = "zoha-db-subnet-group"
   }
 }
 
 # Security Group for the RDS instance
 resource "aws_security_group" "default" {
-  name        = "my-db-security-group"
+  name        = "zoha-db-security-group"
   description = "Allow all inbound traffic"
   vpc_id      = aws_vpc.main.id
 
@@ -50,6 +50,6 @@ resource "aws_security_group" "default" {
   }
 
   tags = {
-    Name = "my-db-security-group"
+    Name = "zoha-db-security-group"
   }
 }
