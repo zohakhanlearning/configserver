@@ -31,12 +31,11 @@ jobs:
         run: rm -f ./terraform/backend*.tf
         working-directory: ./terraform
 
-
-      - name: Select backend file
-        run: |
-            cp backend-dev.tf backend.tf
-          fi
-        working-directory: ./terraform
+#      - name: Select backend file
+#        run: |
+#            cp backend-dev.tf backend.tf
+#          fi
+#        working-directory: ./terraform
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
