@@ -53,7 +53,9 @@ resource "aws_s3_bucket_policy" "S3-bucket" {
         Action = "s3:*"
         Effect = "Allow"
         Resource = "${aws_s3_bucket.S3-bucket.arn}/*"
-        Principal = "*"
+        Principal = {
+          AWS = "arn:aws:iam::5576-9060-5107:user/terraform-gh-actions"
+        }
       }
     ]
   })
